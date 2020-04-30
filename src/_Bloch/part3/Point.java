@@ -36,6 +36,31 @@ class ColorPoint extends Point {
     }
 }
 
+class ColorPoint2 {
+
+    private final Point point;
+    private final Color color;
+
+    public ColorPoint2(Point point, Color color) {
+        this.point = point;
+        this.color = color;
+    }
+
+    private Point asPoint() {
+        return point;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ColorPoint2)) {
+            return false;
+        }
+        ColorPoint2 cp = (ColorPoint2) obj;
+        return point.equals(cp.point)
+                && color.equals(cp.color);
+    }
+}
+
 class Test {
     public static void main(String[] args) {
         ColorPoint p1 = new ColorPoint(1, 2, Color.RED);

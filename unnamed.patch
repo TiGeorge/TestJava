@@ -1,0 +1,73 @@
+Index: src/_Bloch/part3/Point.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/_Bloch/part3/Point.java	(date 1588184703222)
++++ src/_Bloch/part3/Point.java	(date 1588184703222)
+@@ -0,0 +1,49 @@
++package _Bloch.part3;
++
++import java.awt.*;
++
++public class Point {
++    private final int x;
++    private final int y;
++
++    public Point(int x, int y) {
++        this.x = x;
++        this.y = y;
++    }
++
++    @Override
++    public boolean equals(Object obj) {
++
++        if(!(obj instanceof Point)) return false;
++        Point p = (Point) obj;
++        return p.x == x && p.y == y;
++    }
++}
++
++class ColorPoint extends Point {
++    private final Color color;
++
++    public ColorPoint(int x, int y, Color color) {
++        super(x, y);
++        this.color = color;
++    }
++
++    @Override
++    public boolean equals(Object obj) {
++        if(!(obj instanceof Point)) return false;
++        if(!(obj instanceof ColorPoint)) return super.equals(obj);
++        return super.equals(obj) && ((ColorPoint) obj).color == color;
++    }
++}
++
++class Test {
++    public static void main(String[] args) {
++        ColorPoint p1 = new ColorPoint(1, 2, Color.RED);
++        Point p2 = new Point(1, 2);
++        ColorPoint p3 = new ColorPoint(1, 2, Color.BLUE);
++        System.out.println(p1.equals(p2));
++        System.out.println(p2.equals(p3));
++        System.out.println(p1.equals(p3));
++
++    }
++}
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1588184637147)
++++ .idea/vcs.xml	(date 1588184637147)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
