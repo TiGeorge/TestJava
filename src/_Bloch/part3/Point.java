@@ -2,7 +2,7 @@ package _Bloch.part3;
 
 import java.awt.*;
 
-public class Point {
+public class Point implements Cloneable {
     private final int x;
     private final int y;
 
@@ -12,11 +12,26 @@ public class Point {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public Point clone() throws CloneNotSupportedException {
+        return (Point) super.clone();
+    }
 
-        if(!(obj instanceof Point)) return false;
-        Point p = (Point) obj;
-        return p.x == x && p.y == y;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Point)) return false;
+
+        Point point = (Point) o;
+
+        if (x != point.x) return false;
+        return y == point.y;
+   }
+
+    @Override
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 }
 
@@ -51,24 +66,32 @@ class ColorPoint2 {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof ColorPoint2)) {
-            return false;
-        }
-        ColorPoint2 cp = (ColorPoint2) obj;
-        return point.equals(cp.point)
-                && color.equals(cp.color);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ColorPoint2)) return false;
+
+        ColorPoint2 that = (ColorPoint2) o;
+
+        if (point != null ? !point.equals(that.point) : that.point != null) return false;
+        return color != null ? color.equals(that.color) : that.color == null;
     }
+
+    @Override
+    public int hashCode() {
+        int result = point != null ? point.hashCode() : 0;
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        return result;
+    }
+
+
+
 }
 
 class Test {
-    public static void main(String[] args) {
-        ColorPoint p1 = new ColorPoint(1, 2, Color.RED);
-        Point p2 = new Point(1, 2);
-        ColorPoint p3 = new ColorPoint(1, 2, Color.BLUE);
-        System.out.println(p1.equals(p2));
-        System.out.println(p2.equals(p3));
-        System.out.println(p1.equals(p3));
+    public static void main(String[] args) throws CloneNotSupportedException {
+
+        Point p = new Point(1,3);
+        Point p2 = p.clone();
 
     }
 }
